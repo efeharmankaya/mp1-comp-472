@@ -5,8 +5,12 @@ import json
 import sklearn
 from sklearn.model_selection import train_test_split
 from sklearn.datasets import load_files
+from sklearn.naive_bayes import MultinomialNB
 from matplotlib import pyplot as plt
 import numpy as np
+
+# Testing
+from sklearn.metrics import accuracy_score
 
 def pr(x):
     print(json.dumps(x,indent=4))
@@ -48,7 +52,7 @@ def plot_dist(save=None):
         plt.savefig('BBC-distribution.pdf')
     plt.show()
 
-def preprocess():
+def preprocess(docs=docs):
     '''
     Task 1.4
     Preprocess data: creates term-document matrix
@@ -77,7 +81,6 @@ def preprocess():
     cv = sklearn.feature_extraction.text.CountVectorizer()
     td = cv.fit_transform(docs)
     dtm = td.toarray()
-
     return dtm
 
 def split_dataset():
@@ -85,25 +88,31 @@ def split_dataset():
     Task 1.5
     Split data 80% training, 20% testing
 
-    Use:
-        train, test = split_dataset()
-
-    assert(len(docs) == (len(train) + len(test)))
+    Returns:
+        [X_train, X_test, y_train, y_test]
     '''
-    train, test = train_test_split(np.array(docs))
-    
-    return train, test
+    return train_test_split(preprocess(), target, train_size=0.8, test_size=0.2)
 
 def naive_bayes():
     '''
     Task 1.6
     '''
+    X_train, X_test, y_train, y_test = split_dataset()
+
+    nb = MultinomialNB()
+    nb.fit(X_train, y_train)
+
+    y_predicted = nb.predict(X_test)
+    a_score = accuracy_score(y_test, y_predicted)
+    print(f'''
+    accuracy = {a_score}
+    ''')
     pass
 
 if __name__ == '__main__':
     # plot_dist()
     # preprocess()
     # train, test = split_dataset()
-    train, test = split_dataset()
+    naive_bayes()
     print('done')
     
