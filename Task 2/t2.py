@@ -4,7 +4,7 @@ from sklearn.model_selection import train_test_split
 import numpy as np
 import pandas as pd
 
-"""Generating distribution graph of instances"""
+"""Generating graph of instance distribution"""
 df = pd.read_csv(r"data\drug200.csv")
 target_counts = df["Drug"].value_counts()
 target_counts.plot.bar()
