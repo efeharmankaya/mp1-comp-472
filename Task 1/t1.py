@@ -10,7 +10,7 @@ from matplotlib import pyplot as plt
 import numpy as np
 
 # Testing
-from sklearn.metrics import accuracy_score
+from sklearn.metrics import accuracy_score, confusion_matrix, classification_report, f1_score
 
 def pr(x):
     print(json.dumps(x,indent=4))
@@ -93,7 +93,7 @@ def split_dataset():
     '''
     return train_test_split(preprocess(), target, train_size=0.8, test_size=0.2)
 
-def naive_bayes():
+def naive_bayes(trial=1, desc='Default Values'):
     '''
     Task 1.6
     '''
@@ -103,11 +103,27 @@ def naive_bayes():
     nb.fit(X_train, y_train)
 
     y_predicted = nb.predict(X_test)
-    a_score = accuracy_score(y_test, y_predicted)
-    print(f'''
-    accuracy = {a_score}
-    ''')
-    pass
+
+    f1 = f1_score(y_test, y_predicted, average='macro')
+    print(f1)
+
+    output = f'''
+=============
+a) Multinomial Naive Bayes (Default Values) Trial #{trial}
+b) confusion_matrix:
+{confusion_matrix(y_test, y_predicted)}
+c) classification report:
+{classification_report(y_test, y_predicted, target_names=target_names)}
+d) 
+accuracy: {accuracy_score(y_test, y_predicted)}
+macro-average F1:
+weighted-average F1:
+f1:
+{f1}
+e)
+============='''
+    with open('bbc-performance.txt', 'w') as file:
+        file.write(output)
 
 if __name__ == '__main__':
     # plot_dist()

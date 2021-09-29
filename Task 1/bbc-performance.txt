@@ -1,0 +1,30 @@
+
+=============
+a) Multinomial Naive Bayes (Default Values) Trial #1
+b) confusion_matrix:
+[[102   0   3   0   1]
+ [  0  83   0   0   2]
+ [  0   1  95   0   0]
+ [  1   0   0  89   0]
+ [  0   0   0   0  68]]
+c) classification report:
+               precision    recall  f1-score   support
+
+     business       0.99      0.96      0.98       106
+entertainment       0.99      0.98      0.98        85
+     politics       0.97      0.99      0.98        96
+        sport       1.00      0.99      0.99        90
+         tech       0.96      1.00      0.98        68
+
+     accuracy                           0.98       445
+    macro avg       0.98      0.98      0.98       445
+ weighted avg       0.98      0.98      0.98       445
+
+d) 
+accuracy: 0.9820224719101124
+macro-average F1:
+weighted-average F1:
+f1:
+0.9821074386082461
+e)
+=============
