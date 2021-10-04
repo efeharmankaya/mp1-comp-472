@@ -4,21 +4,21 @@ Multinomial Naive Bayes (Default Values) Trial #1
 
 b) 
 confusion_matrix:
-[[100   0   3   0   1]
- [  0  77   2   0   2]
- [  1   0  89   0   2]
- [  0   1   0 101   0]
- [  1   0   0   0  65]]
+[[104   0   1   0   5]
+ [  1  69   1   0   2]
+ [  1   1  82   0   2]
+ [  0   0   0 104   0]
+ [  0   0   0   0  72]]
 
 c) 
 classification report:
                precision    recall  f1-score   support
 
-     business       0.98      0.96      0.97       104
-entertainment       0.99      0.95      0.97        81
-     politics       0.95      0.97      0.96        92
-        sport       1.00      0.99      1.00       102
-         tech       0.93      0.98      0.96        66
+     business       0.98      0.95      0.96       110
+entertainment       0.99      0.95      0.97        73
+     politics       0.98      0.95      0.96        86
+        sport       1.00      1.00      1.00       104
+         tech       0.89      1.00      0.94        72
 
      accuracy                           0.97       445
     macro avg       0.97      0.97      0.97       445
@@ -26,9 +26,9 @@ entertainment       0.99      0.95      0.97        81
 
 
 d) 
-accuracy: 0.9707865168539326
-macro-average F1: 0.9694745474811768
-weighted-average F1: 0.9709044650959678
+accuracy: 0.9685393258426966
+macro-average F1: 0.9667760561878209
+weighted-average F1: 0.968770539636369
 
 e)
 prior probability:
@@ -58,4 +58,21 @@ words w/ frequency of zero (0) in each class:
 	sport : 18850/29421 | 0.6407
 	tech : 17323/29421 | 0.5888
 
+j)
+words w/ a frequency of one (1) in the corpus: 10005/29421 | 0.3401
+
+k)
+2 favorite words:
+'latinohiphopradio':
+	business : -11.97333951078562
+	entertainment : -11.764345443236094
+	politics : -12.062600579148711
+	sport : -12.005356949055493
+	tech : -9.617516835392962
+'patriots':
+	business : -11.97333951078562
+	entertainment : -11.764345443236094
+	politics : -11.369453398588766
+	sport : -12.005356949055493
+	tech : -12.182466192854498
 =============

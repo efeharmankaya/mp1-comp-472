@@ -143,6 +143,17 @@ def tokens_per_class(dtm):
 
     return word_tokens_per_class, zero_tokens_per_class
 
+def one_freq_corpus(dtm):
+    flat_dtm = [0 for i in range(len(dtm[0]))]
+    for doc_dtm in dtm:
+        flat_dtm += doc_dtm
+    
+    one_freq = f'{Counter(flat_dtm).get(1)}/{len(flat_dtm)} | {Counter(flat_dtm).get(1)/len(flat_dtm):0.4f}'
+    return one_freq
+
+def get_log_prob(nb, cv, word):
+    return '\n'.join(f"\t{target_names[index]} : {doc[cv.vocabulary_.get(word)]}" for index,doc in enumerate(nb.feature_log_prob_))
+
 def naive_bayes(trial=1, desc='Default Values'):
     '''
     Task 1.6
@@ -156,19 +167,6 @@ def naive_bayes(trial=1, desc='Default Values'):
     y_predicted = nb.predict(X_test)
 
     word_tokens_per_class, zero_tokens_per_class = tokens_per_class(dtm)
-
-    print(f'''
-    =============
-    ''')
-
-
-    print('''
-    =============    
-    ''')
-
-    # TEMP FOR TESTING
-    # if trial == 1:
-    #     return
 
     output = f'''=============
 a) 
@@ -202,6 +200,15 @@ i)
 words w/ frequency of zero (0) in each class:
 {zero_tokens_per_class}
 
+j)
+words w/ a frequency of one (1) in the corpus: {one_freq_corpus(dtm)}
+
+k)
+2 favorite words:
+'latinohiphopradio':
+{get_log_prob(nb, cv, 'latinohiphopradio')}
+'patriots':
+{get_log_prob(nb, cv, 'patriots')}
 ============='''
     with open('bbc-performance.txt', 'w' if trial == 1 else 'a') as file:
         file.write(output)
