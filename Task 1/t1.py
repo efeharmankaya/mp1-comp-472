@@ -154,14 +154,17 @@ def one_freq_corpus(dtm):
 def get_log_prob(nb, cv, word):
     return '\n'.join(f"\t{target_names[index]} : {doc[cv.vocabulary_.get(word)]}" for index,doc in enumerate(nb.feature_log_prob_))
 
-def naive_bayes(trial=1, desc='Default Values'):
+def naive_bayes(trial=1, smoothing=None, desc='Default Values'):
     '''
     Task 1.6
     '''
+    smoothing = smoothing if smoothing else 1.0
+    desc = desc if smoothing == 1.0 else f'Smoothing = {smoothing}'
+
     dtm, cv = preprocess()
     X_train, X_test, y_train, y_test = split_dataset(dtm)
 
-    nb = MultinomialNB()
+    nb = MultinomialNB(alpha=smoothing)
     nb.fit(X_train, y_train)
 
     y_predicted = nb.predict(X_test)
@@ -170,7 +173,7 @@ def naive_bayes(trial=1, desc='Default Values'):
 
     output = f'''=============
 a) 
-Multinomial Naive Bayes (Default Values) Trial #{trial}
+Multinomial Naive Bayes ({desc}) Trial #{trial}
 
 b) 
 confusion_matrix:
@@ -211,13 +214,16 @@ k)
 {get_log_prob(nb, cv, 'patriots')}
 ============='''
     with open('bbc-performance.txt', 'w' if trial == 1 else 'a') as file:
-        file.write(output)
+        file.write(output if trial == 1 else '\n' + output)
 
 if __name__ == '__main__':
     # plot_dist()
     # preprocess()
     # train, test = split_dataset()
-    naive_bayes()
+
+    smoothing = {3 : 0.0001, 4: 0.9}
+    for trial_no in range(1,5):
+        naive_bayes(trial=trial_no, smoothing=smoothing.get(trial_no))
     # get_prior_prob()
     print('done')
     
