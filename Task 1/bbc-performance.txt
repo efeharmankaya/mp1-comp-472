@@ -1,28 +1,35 @@
 =============
-a) Multinomial Naive Bayes (Default Values) Trial #1
-b) confusion_matrix:
-[[103   0   3   0   2]
- [  0  66   0   0   3]
- [  3   1  84   0   0]
- [  1   0   0  95   0]
- [  0   0   0   0  84]]
-c) classification report:
+a) 
+Multinomial Naive Bayes (Default Values) Trial #1
+
+b) 
+confusion_matrix:
+[[100   0   3   0   1]
+ [  0  77   2   0   2]
+ [  1   0  89   0   2]
+ [  0   1   0 101   0]
+ [  1   0   0   0  65]]
+
+c) 
+classification report:
                precision    recall  f1-score   support
 
-     business       0.96      0.95      0.96       108
-entertainment       0.99      0.96      0.97        69
-     politics       0.97      0.95      0.96        88
-        sport       1.00      0.99      0.99        96
-         tech       0.94      1.00      0.97        84
+     business       0.98      0.96      0.97       104
+entertainment       0.99      0.95      0.97        81
+     politics       0.95      0.97      0.96        92
+        sport       1.00      0.99      1.00       102
+         tech       0.93      0.98      0.96        66
 
      accuracy                           0.97       445
     macro avg       0.97      0.97      0.97       445
  weighted avg       0.97      0.97      0.97       445
 
+
 d) 
 accuracy: 0.9707865168539326
-macro-average F1: 0.9709180867959102
-weighted-average F1: 0.9707849315437055
+macro-average F1: 0.9694745474811768
+weighted-average F1: 0.9709044650959678
+
 e)
 prior probability:
 	business : 0.2292134831460674
@@ -30,4 +37,25 @@ prior probability:
 	politics : 0.18741573033707865
 	sport : 0.22966292134831462
 	tech : 0.1802247191011236
+
+f)
+size of the vocabulary: 29421 unique words
+
+g-h)
+word tokens in each class:
+	business : 164663
+	entertainment : 124893
+	politics : 185208
+	sport : 162953
+	tech : 198640
+	TOTAL: 836357
+
+i) 
+words w/ frequency of zero (0) in each class:
+	business : 17538/29421 | 0.5961
+	entertainment : 17746/29421 | 0.6032
+	politics : 18201/29421 | 0.6186
+	sport : 18850/29421 | 0.6407
+	tech : 17323/29421 | 0.5888
+
 =============

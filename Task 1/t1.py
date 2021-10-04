@@ -80,10 +80,12 @@ def preprocess(docs=docs):
     '''
     cv = sklearn.feature_extraction.text.CountVectorizer()
     td = cv.fit_transform(docs)
-    dtm = td.toarray()
-    return dtm
 
-def split_dataset():
+    dtm = td.toarray()
+
+    return dtm, cv
+
+def split_dataset(dtm, train_size = 0.8, test_size = 0.2):
     '''
     Task 1.5
     Split data 80% training, 20% testing
@@ -91,31 +93,93 @@ def split_dataset():
     Returns:
         [X_train, X_test, y_train, y_test]
     '''
-    return train_test_split(preprocess(), target, train_size=0.8, test_size=0.2)
+    return train_test_split(dtm, target, train_size=train_size, test_size=test_size)
 
 from collections import Counter
 def get_prior_prob():
     results = sorted(Counter(target).items(), key=lambda x: x[0])
     return '\n'.join((f"\t{target_names[x[0]]} : {x[1]/len(target)}") for x in results) 
 
+# def get_tokens_per_class(dtm):
+#     x = []
+#     for doc in dtm:
+#         count = 0
+#         for word in doc:
+#             count += word
+#         x.append(count)
+#     print(x)
+#     # counts = [sum(i) for i in x]
+#     # print(counts)
+
+def get_tokens_per_class(dtm):
+    token_classes = { key: 0 for key in range(len(target_names))}
+    for index, doc in enumerate(dtm):
+        class_index = target[index]
+        token_classes[class_index] += sum(doc)
+
+    output = '\n'.join(f'\t{target_names[key]} : {value}' for key,value in token_classes.items())
+    return output + f'\n\tTOTAL: {sum(token_classes.values())}'
+
+def tokens_per_class(dtm):
+    cumulative_words_per_token_class = {key : [0 for i in range(len(dtm[0]))] for key in range(len(target_names))}
+    for index, doc in enumerate(dtm):
+        class_index = target[index]
+        cumulative_words_per_token_class[class_index] += doc
+
+    '''
+    g-h)
+    word tokens in each class:
+        <class_name> : <number of word tokens>
+        ...
+        TOTAL : <total words>
+    '''
+    word_tokens_per_class = '\n'.join(f'\t{target_names[key]} : {sum(value)}' for key,value in cumulative_words_per_token_class.items()) + f'\n\tTOTAL: {sum([sum(x) for x in cumulative_words_per_token_class.values()])}'
+    '''
+    i) 
+    words w/ frequency of zero (0) in each class:
+        <class_name> : <number of word tokens w/ freq = 0> | <float percentage (words w/ freq 0 from vocab list) / (len(vocab list))>
+    '''
+    zero_tokens_per_class = '\n'.join(f'\t{target_names[key]} : {Counter(value).get(0)}/{(len(value))} | {Counter(value).get(0)/len(value):0.4f}' for key,value in cumulative_words_per_token_class.items())
+
+    return word_tokens_per_class, zero_tokens_per_class
+
 def naive_bayes(trial=1, desc='Default Values'):
     '''
     Task 1.6
     '''
-    X_train, X_test, y_train, y_test = split_dataset()
+    dtm, cv = preprocess()
+    X_train, X_test, y_train, y_test = split_dataset(dtm)
 
     nb = MultinomialNB()
     nb.fit(X_train, y_train)
 
     y_predicted = nb.predict(X_test)
 
-    output = f'''=============
-a) Multinomial Naive Bayes (Default Values) Trial #{trial}
+    word_tokens_per_class, zero_tokens_per_class = tokens_per_class(dtm)
 
-b) confusion_matrix:
+    print(f'''
+    =============
+    ''')
+
+
+    print('''
+    =============    
+    ''')
+
+    # TEMP FOR TESTING
+    # if trial == 1:
+    #     return
+
+    output = f'''=============
+a) 
+Multinomial Naive Bayes (Default Values) Trial #{trial}
+
+b) 
+confusion_matrix:
 {confusion_matrix(y_test, y_predicted)}
 
-c) classification report:
+c) 
+classification report:
 {classification_report(y_test, y_predicted, target_names=target_names)}
 
 d) 
@@ -127,9 +191,19 @@ e)
 prior probability:
 {get_prior_prob()}
 
+f)
+size of the vocabulary: {len(cv.vocabulary_)} unique words
+
+g-h)
+word tokens in each class:
+{word_tokens_per_class}
+
+i) 
+words w/ frequency of zero (0) in each class:
+{zero_tokens_per_class}
 
 ============='''
-    with open('bbc-performance.txt', 'w') as file:
+    with open('bbc-performance.txt', 'w' if trial == 1 else 'a') as file:
         file.write(output)
 
 if __name__ == '__main__':
