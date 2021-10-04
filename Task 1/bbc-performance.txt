@@ -1,30 +1,33 @@
-
 =============
 a) Multinomial Naive Bayes (Default Values) Trial #1
 b) confusion_matrix:
-[[102   0   3   0   1]
- [  0  83   0   0   2]
- [  0   1  95   0   0]
- [  1   0   0  89   0]
- [  0   0   0   0  68]]
+[[103   0   3   0   2]
+ [  0  66   0   0   3]
+ [  3   1  84   0   0]
+ [  1   0   0  95   0]
+ [  0   0   0   0  84]]
 c) classification report:
                precision    recall  f1-score   support
 
-     business       0.99      0.96      0.98       106
-entertainment       0.99      0.98      0.98        85
-     politics       0.97      0.99      0.98        96
-        sport       1.00      0.99      0.99        90
-         tech       0.96      1.00      0.98        68
+     business       0.96      0.95      0.96       108
+entertainment       0.99      0.96      0.97        69
+     politics       0.97      0.95      0.96        88
+        sport       1.00      0.99      0.99        96
+         tech       0.94      1.00      0.97        84
 
-     accuracy                           0.98       445
-    macro avg       0.98      0.98      0.98       445
- weighted avg       0.98      0.98      0.98       445
+     accuracy                           0.97       445
+    macro avg       0.97      0.97      0.97       445
+ weighted avg       0.97      0.97      0.97       445
 
 d) 
-accuracy: 0.9820224719101124
-macro-average F1:
-weighted-average F1:
-f1:
-0.9821074386082461
+accuracy: 0.9707865168539326
+macro-average F1: 0.9709180867959102
+weighted-average F1: 0.9707849315437055
 e)
+prior probability:
+	business : 0.2292134831460674
+	entertainment : 0.17348314606741572
+	politics : 0.18741573033707865
+	sport : 0.22966292134831462
+	tech : 0.1802247191011236
 =============

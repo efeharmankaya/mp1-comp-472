@@ -93,6 +93,11 @@ def split_dataset():
     '''
     return train_test_split(preprocess(), target, train_size=0.8, test_size=0.2)
 
+from collections import Counter
+def get_prior_prob():
+    results = sorted(Counter(target).items(), key=lambda x: x[0])
+    return '\n'.join((f"\t{target_names[x[0]]} : {x[1]/len(target)}") for x in results) 
+
 def naive_bayes(trial=1, desc='Default Values'):
     '''
     Task 1.6
@@ -104,23 +109,25 @@ def naive_bayes(trial=1, desc='Default Values'):
 
     y_predicted = nb.predict(X_test)
 
-    f1 = f1_score(y_test, y_predicted, average='macro')
-    print(f1)
-
-    output = f'''
-=============
+    output = f'''=============
 a) Multinomial Naive Bayes (Default Values) Trial #{trial}
+
 b) confusion_matrix:
 {confusion_matrix(y_test, y_predicted)}
+
 c) classification report:
 {classification_report(y_test, y_predicted, target_names=target_names)}
+
 d) 
 accuracy: {accuracy_score(y_test, y_predicted)}
-macro-average F1:
-weighted-average F1:
-f1:
-{f1}
+macro-average F1: {f1_score(y_test, y_predicted, average='macro')}
+weighted-average F1: {f1_score(y_test, y_predicted, average='weighted')}
+
 e)
+prior probability:
+{get_prior_prob()}
+
+
 ============='''
     with open('bbc-performance.txt', 'w') as file:
         file.write(output)
@@ -130,5 +137,6 @@ if __name__ == '__main__':
     # preprocess()
     # train, test = split_dataset()
     naive_bayes()
+    # get_prior_prob()
     print('done')
     
