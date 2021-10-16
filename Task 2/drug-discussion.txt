@@ -1,0 +1,19 @@
+Every time the classifier models are run, they return slightly different performance 
+metrics. There are two major reasons for this, first and foremost is the random 
+selection of the training and testing sets every time the algorithm is run. This 
+means that the classifiers are trained on slightly different data sets each time, 
+and therefore the associated predictions on the test set vary depending on how 
+frequently certain parameter combinations appear in the training set. This results 
+in different results for all classifier models used in this assignment task. The 
+second reason for the variation in predicted outcomes is that many of the models use 
+stochastic gradient descent to make their predictions, namely the perceptron models 
+(PER, Base-MLP, Top-MLP). The term stochastic implies that the outcomes of each 
+internal "step" or "decision" made  by the model comes with a certain probability 
+assigned to it. This means that at every iteration that the model is run, the internal 
+steps taken by the model may change depending on the probabilities of the outcomes of 
+these steps. This inherent uncertainty of the decisions being made by the model results 
+in the final predictions being different from one iteration to the next, since the model 
+is trained slightly differently each time. For example, since the perceptron models use 
+stochastic gradient descent, this means that the initial vector of parameters selected 
+randomly within the training set every time causes the model to converge slightly 
+differently each time.
