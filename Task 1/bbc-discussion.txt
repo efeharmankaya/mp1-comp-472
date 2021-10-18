@@ -1,0 +1,29 @@
+a) What metric is best suited to this dataset/task and why (step 2)
+
+Accuracy would be best suited to this dataset/task as the % of classes within the dataset
+are represented fairly equally (within 20%) and are all equally important to the output.
+Since none of the given classes are particularly important to keep track of, as it would
+be in the case of a medical result, the accuracy metric would be sufficient to evaluate
+the output.
+
+b) Why the performance of steps (8-10) are the same or are different than those of step (7) above.
+
+Step 8 (Default Values Trial 2):
+    All performance metrics are the same as nothing was changed in the Naive Bayes Classifier
+    with default values.
+Step 9 (Smoothing Value 0.0001)
+    The confusion matrix indicates a lesser number of errors in classification, also shown in a
+    better accuracy score of 0.9933 compared to the default baseline of 0.9820. Other performance
+    metrics are indentical as before since they measured metrics from before the NB initialization.
+    In the log-prob, both words has vastly different values. 'latinohiphopradio' was classified as 
+    the tech class in both instances, however, this iteration seemed more confident due to a greater
+    difference in probability. 'patriots' remained with the highest probability in politics.
+Step 10 (Smoothing Value 0.9)
+    The confusion matrix and subsequent accuracy seems to have diminished by increasing the smoothing
+    from 0.0001 to 0.9 back to a similar level as the basline default iteration. For the log-prob values
+    the output values are nearly indentical to the baseline with the same maximum probability predictions.
+
+From the confusion matrix one can see how the increasing smoothing value biased the model to the more
+abundant classes causing slight underfitting of the model. 0.0001 allows for all words in the input text
+to have a weight in the classification allowing all classes to be an option regardless if the word was in
+the original list of vocab for the class. Whereas 0.9 causes underfitting to some extent.

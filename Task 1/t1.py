@@ -100,17 +100,6 @@ def get_prior_prob():
     results = sorted(Counter(target).items(), key=lambda x: x[0])
     return '\n'.join((f"\t{target_names[x[0]]} : {x[1]/len(target)}") for x in results) 
 
-# def get_tokens_per_class(dtm):
-#     x = []
-#     for doc in dtm:
-#         count = 0
-#         for word in doc:
-#             count += word
-#         x.append(count)
-#     print(x)
-#     # counts = [sum(i) for i in x]
-#     # print(counts)
-
 def get_tokens_per_class(dtm):
     token_classes = { key: 0 for key in range(len(target_names))}
     for index, doc in enumerate(dtm):
@@ -154,15 +143,15 @@ def one_freq_corpus(dtm):
 def get_log_prob(nb, cv, word):
     return '\n'.join(f"\t{target_names[index]} : {doc[cv.vocabulary_.get(word)]}" for index,doc in enumerate(nb.feature_log_prob_))
 
-def naive_bayes(trial=1, smoothing=None, desc='Default Values'):
+def naive_bayes(params, trial=1, smoothing=None, desc='Default Values'):
     '''
     Task 1.6
     '''
     smoothing = smoothing if smoothing else 1.0
     desc = desc if smoothing == 1.0 else f'Smoothing = {smoothing}'
 
-    dtm, cv = preprocess()
-    X_train, X_test, y_train, y_test = split_dataset(dtm)
+    dtm, cv = params['preprocess']
+    X_train, X_test, y_train, y_test = params['split']
 
     nb = MultinomialNB(alpha=smoothing)
     nb.fit(X_train, y_train)
@@ -222,8 +211,15 @@ if __name__ == '__main__':
     # train, test = split_dataset()
 
     smoothing = {3 : 0.0001, 4: 0.9}
+
+    dtm, cv = preprocess()
+    params = {
+        'preprocess' : [dtm, cv],
+        'split' : split_dataset(dtm)
+    }
+
     for trial_no in range(1,5):
-        naive_bayes(trial=trial_no, smoothing=smoothing.get(trial_no))
+        naive_bayes(params, trial=trial_no, smoothing=smoothing.get(trial_no))
     # get_prior_prob()
     print('done')
     
