@@ -1,4 +1,6 @@
 # MP1 COMP 472
+https://github.com/efeharmankaya/mp1-comp-472
+
 ## Setup environment (Task 1 & 2)
 ```bash
 ..\> pip3 install -r .\requirements.txt
